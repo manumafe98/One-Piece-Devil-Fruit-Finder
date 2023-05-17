@@ -5,11 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 
-PARAMECIA_DIV = "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/div[2]"
-ZOAN_DIV = "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/div[4]"
-LOGIA_DIV = "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/div[6]"
-
-
 class DevilFruits:
     def __init__(self):
         self.chrome_options = Options()
@@ -66,35 +61,21 @@ class DevilFruits:
                     By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]"
                               "/div[2]/div/aside/section/div[7]/div").text.split("[")[0]
 
-            try:
-                fruit_type_elem = self.driver.find_element(
-                    By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/aside/section/div[6]/div")
-            # Change try for if statement that if contains "chapter" try with div[7] instead
-            except selenium.common.exceptions.NoSuchElementException:
-                fruit_type_elem = self.driver.find_element(
-                    By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/aside/section/div[7]/div")
+            fruit_type_elem = self.driver.find_element(
+                By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/aside/section/div[6]/div")
+            for fruit_type in fruit_type_elem.find_elements(By.CSS_SELECTOR, "div > a"):
+                if "Chapter" in fruit_type.text:
+                    fruit_type_elem = self.driver.find_element(
+                        By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/aside/section/div[7]/div")
 
             types = [fruit_type.text for fruit_type in fruit_type_elem.find_elements(By.CSS_SELECTOR, "div > a")]
 
-            if fruit_name in self.fruits_dict.values():
-                continue
-
             if len(types) > 1:
-                fruit_type = ",".join(types)
+                fruit_type = ", ".join(types)
                 self.fruits_dict = {"fruit_name": fruit_name, "current_user": current_user, "type": fruit_type}
                 self.fruits.append(self.fruits_dict)
             else:
                 self.fruits_dict = {"fruit_name": fruit_name, "current_user": current_user, "type": types[0]}
                 self.fruits.append(self.fruits_dict)
-
-
-devil_fruits = DevilFruits()
-paramecia_list = devil_fruits.get_fruits(PARAMECIA_DIV)
-zoan_list = devil_fruits.get_fruits(ZOAN_DIV)
-logia_list = devil_fruits.get_fruits(LOGIA_DIV)
-final_list = paramecia_list + zoan_list + logia_list
-devil_fruits.get_fruit_info(final_list)
-print(devil_fruits.fruits)
-
-# TODO create the flask get_all and get_specific_fruit with jsonify
-# TODO Fix type : "Chapter 921,Episode 912" in some zoan users
+        self.driver.quit()
+        return self.fruits

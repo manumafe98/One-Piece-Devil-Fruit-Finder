@@ -1,33 +1,40 @@
 from devil_fruits import DevilFruits
+from model import db, FruitsDb
 from flask import Blueprint, jsonify
 
-PARAMECIA_DIV = "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/div[2]"
-ZOAN_DIV = "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/div[4]"
-LOGIA_DIV = "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/div[6]"
 
 main = Blueprint("main", __name__)
+devil_fruits = DevilFruits()
 
 
 @main.route("/get")
 def get_all_devil_fruits():
-    devil_fruits = DevilFruits()
-    paramecia_list = devil_fruits.get_fruits(PARAMECIA_DIV)
-    zoan_list = devil_fruits.get_fruits(ZOAN_DIV)
-    logia_list = devil_fruits.get_fruits(LOGIA_DIV)
+    fruit_count = db.session.query(FruitsDb).count()
+    if fruit_count == 0:
+        devil_fruits.scrape_devil_fruits()
 
-    final_list = paramecia_list + zoan_list + logia_list
-    final_list = list(dict.fromkeys(final_list))
+    all_devil_fruits = db.session.query(FruitsDb).all()
+    all_devil_fruits_info = [
+        {
+            "fruit_name": devil_fruit.fruit_name,
+            "fruit_type": devil_fruit.fruit_type,
+            "current_user": devil_fruit.current_user
+        }
+        for devil_fruit in all_devil_fruits
+    ]
 
-    all_devil_fruits_info = devil_fruits.get_fruit_info(final_list)
     return jsonify(all_devil_fruits_info)
 
 
-# @app.route("/get/<string:fruit>")
-# def get_all_devil_fruits(fruit):
-#
-#     return jsonify()
+@main.route("/get/<string:fruit>")
+def get_a_devil_fruits(fruit):
+    get_fruit = FruitsDb.query.filter_by(fruit_name=fruit).first()
+    fruit_info = {"fruit_name": get_fruit.fruit_name,
+                  "fruit_type": get_fruit.fruit_type,
+                  "current_user": get_fruit.current_user}
+    return jsonify(fruit_info)
 
-# TODO add the logic to the get that only gets a specific fruit
-# TODO make the DevilFruits class write to the db instead of creating a dictionary and a list
-# TODO then when getting the data with a query transform that into a dictionary and return it with jsonify
-# TODO the app should run in background the script that gets the fruits so it has the info updated in the DB
+
+# TODO Clean data from the fruit_name so its easy to make the search, maybe delete non alphabet characters
+# TODO split the fruit_names with "Moderu"
+# TODO strip the fruit_names to avoid blank spaces

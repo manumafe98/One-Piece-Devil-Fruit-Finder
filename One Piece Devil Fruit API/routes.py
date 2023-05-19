@@ -33,8 +33,3 @@ def get_a_devil_fruits(fruit):
                   "fruit_type": get_fruit.fruit_type,
                   "current_user": get_fruit.current_user}
     return jsonify(fruit_info)
-
-
-# TODO Clean data from the fruit_name so its easy to make the search, maybe delete non alphabet characters
-# TODO split the fruit_names with "Moderu"
-# TODO strip the fruit_names to avoid blank spaces

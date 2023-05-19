@@ -1,4 +1,5 @@
 import time
+import re
 import selenium.common.exceptions
 from model import db, FruitsDb
 from selenium import webdriver
@@ -11,12 +12,23 @@ LOGIA_DIV = "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/div[6]"
 
 
 class DevilFruits:
+    """This class scrapes all the devil fruits from: 'https://onepiece.fandom.com/wiki/Devil_Fruit'.
+       Cleans the data and write that data to a database.
+    """
     def __init__(self):
         self.chrome_options = Options()
         self.chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=self.chrome_options)
 
     def get_fruits(self, div):
+        """Gets all the href of the devil fruits anchor tags in the webpage.
+
+        Args:
+            div (str): Xpath of the div that we want to scrape.
+
+        Returns:
+            array: Array of all the devil fruits links.
+        """
         self.driver.get("https://onepiece.fandom.com/wiki/Devil_Fruit")
         time.sleep(1)
         div_element = self.driver.find_element(By.XPATH, div)
@@ -30,6 +42,11 @@ class DevilFruits:
         return href_list
 
     def get_fruit_info(self, array):
+        """Receives an array of links to scrape from and get the data to write to the db.
+
+        Args:
+            array (array): Links array.
+        """
         href_list = array
         for link in href_list:
             self.driver.get(link)
@@ -56,10 +73,21 @@ class DevilFruits:
                         By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]"
                                   "/div[1]/div/aside/section/div[2]/div").text.split("\n")[0]
 
+            # Improving formatting of fruit_names
             if "(" in fruit_name:
                 fruit_name = fruit_name.split("(")[0]
             elif "[" in fruit_name:
                 fruit_name = fruit_name.split("[")[0]
+
+            fruit_name = fruit_name.strip()
+            if "Moderu" in fruit_name:
+                fruit_name = re.sub(r'\\', '', fruit_name)
+                fruit_name = re.sub(r'["“”]', '', fruit_name)
+                fruit_name = re.sub(r'[:,]', '', fruit_name)
+            else:
+                regex = re.compile('[^a-zA-Z]')
+                fruit_name = regex.sub('', fruit_name)
+                fruit_name = re.sub(r"(\w)([A-Z])", r"\1 \2", fruit_name)
 
             try:
                 current_user = self.driver.find_element(
@@ -107,6 +135,8 @@ class DevilFruits:
         self.driver.quit()
 
     def scrape_devil_fruits(self):
+        """Initiates the scraping process and pass the arguments to the functions.
+        """
         paramecia_list = self.get_fruits(PARAMECIA_DIV)
         zoan_list = self.get_fruits(ZOAN_DIV)
         logia_list = self.get_fruits(LOGIA_DIV)

@@ -9,6 +9,11 @@ devil_fruits = DevilFruits()
 
 @main.route("/get")
 def get_all_devil_fruits():
+    """This function checks if the db has information and if not initiates the scraping process.
+
+    Returns:
+        json: Retrieves a json of all the devil fruits information
+    """
     fruit_count = db.session.query(FruitsDb).count()
     if fruit_count == 0:
         devil_fruits.scrape_devil_fruits()
@@ -28,6 +33,14 @@ def get_all_devil_fruits():
 
 @main.route("/get/<string:fruit>")
 def get_a_devil_fruits(fruit):
+    """Makes a query to the db with the fruit_name that you passed and retrieves a json with the data.
+
+    Args:
+        fruit (str): the devil fruit you want data
+
+    Returns:
+        json: Retrieves a json with the information of the passed fruit
+    """
     get_fruit = FruitsDb.query.filter_by(fruit_name=fruit).first()
     fruit_info = {"fruit_name": get_fruit.fruit_name,
                   "fruit_type": get_fruit.fruit_type,

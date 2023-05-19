@@ -13,7 +13,12 @@ LOGIA_DIV = "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/div[6]"
 
 class DevilFruits:
     """This class scrapes all the devil fruits from: 'https://onepiece.fandom.com/wiki/Devil_Fruit'.
-       Cleans the data and write that data to a database.
+
+    Making an array of all the devil fruits links that the web page has currently.
+
+    Then with that links goes one by one and scrapes the fruit_name, fruit_type and current_user.
+
+    Then it formats and cleans the data and writes it to a database.
     """
     def __init__(self):
         self.chrome_options = Options()
@@ -21,7 +26,7 @@ class DevilFruits:
         self.driver = webdriver.Chrome(options=self.chrome_options)
 
     def get_fruits(self, div):
-        """Gets all the href of the devil fruits anchor tags in the webpage.
+        """Gets the href of the devil fruits anchor tags in the webpage.
 
         Args:
             div (str): Xpath of the div that we want to scrape.
@@ -45,7 +50,7 @@ class DevilFruits:
         """Receives an array of links to scrape from and get the data to write to the db.
 
         Args:
-            array (array): Links array.
+            array (array): An array of all devil fruits links.
         """
         href_list = array
         for link in href_list:
@@ -135,7 +140,7 @@ class DevilFruits:
         self.driver.quit()
 
     def scrape_devil_fruits(self):
-        """Initiates the scraping process and pass the arguments to the functions.
+        """Initiates the scraping process and passes the arguments to the functions.
         """
         paramecia_list = self.get_fruits(PARAMECIA_DIV)
         zoan_list = self.get_fruits(ZOAN_DIV)

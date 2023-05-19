@@ -46,3 +46,9 @@ def get_a_devil_fruits(fruit):
                   "fruit_type": get_fruit.fruit_type,
                   "current_user": get_fruit.current_user}
     return jsonify(fruit_info)
+
+# TODO make an app that consumes this api
+# TODO make a simple frontend with a footer and a navbar and a search bar
+# TODO maybe like the thematic is One Piece add a Luffy image
+# TODO add an extra field to the database fruit_img with the link of the img
+# TODO dockerize the application and the database

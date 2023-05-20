@@ -23,7 +23,8 @@ def get_all_devil_fruits():
         {
             "fruit_name": devil_fruit.fruit_name,
             "fruit_type": devil_fruit.fruit_type,
-            "current_user": devil_fruit.current_user
+            "current_user": devil_fruit.current_user,
+            "fruit_img": devil_fruit.fruit_img
         }
         for devil_fruit in all_devil_fruits
     ]
@@ -44,11 +45,12 @@ def get_a_devil_fruits(fruit):
     get_fruit = FruitsDb.query.filter_by(fruit_name=fruit).first()
     fruit_info = {"fruit_name": get_fruit.fruit_name,
                   "fruit_type": get_fruit.fruit_type,
-                  "current_user": get_fruit.current_user}
+                  "current_user": get_fruit.current_user,
+                  "fruit_img": get_fruit.fruit_img
+                  }
     return jsonify(fruit_info)
 
 # TODO make an app that consumes this api
 # TODO make a simple frontend with a footer and a navbar and a search bar
 # TODO maybe like the thematic is One Piece add a Luffy image
-# TODO add an extra field to the database fruit_img with the link of the img
 # TODO dockerize the application and the database

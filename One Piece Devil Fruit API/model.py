@@ -22,3 +22,4 @@ class FruitsDb(db.Model):
     fruit_name = db.Column(db.String(250), unique=True, nullable=False)
     fruit_type = db.Column(db.String(250), nullable=False)
     current_user = db.Column(db.String(250), nullable=False)
+    fruit_img = db.Column(db.String(250), nullable=False)

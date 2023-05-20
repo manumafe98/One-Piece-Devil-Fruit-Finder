@@ -64,6 +64,9 @@ class DevilFruits:
                 By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[2]/div[1]/div[1]/div/a[2]").text
             if "Non-Canon" in primary_anchor_tag or "Non-Canon" in secondary_anchor_tag:
                 continue
+
+            fruit_img = self.driver.find_element(By.CSS_SELECTOR, "aside > figure > a").get_attribute("href")
+
             try:
                 fruit_name = self.driver.find_element(
                     By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]"
@@ -128,13 +131,15 @@ class DevilFruits:
                 fruit_type = ", ".join(types)
                 new_fruit = FruitsDb(fruit_name=fruit_name,
                                      fruit_type=fruit_type,
-                                     current_user=current_user)
+                                     current_user=current_user,
+                                     fruit_img=fruit_img)
                 db.session.add(new_fruit)
                 db.session.commit()
             else:
                 new_fruit = FruitsDb(fruit_name=fruit_name,
                                      fruit_type=types[0],
-                                     current_user=current_user)
+                                     current_user=current_user,
+                                     fruit_img=fruit_img)
                 db.session.add(new_fruit)
                 db.session.commit()
         self.driver.quit()

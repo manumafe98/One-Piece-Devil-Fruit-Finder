@@ -13,16 +13,16 @@
 </head>
 <body>
     {% include "navbar.html" %}
-
             <!-- Content -->
             <div class="container-fluid">
                 <div class="row justify-content-center align-items-center">
                     <div class="col-lg-6">
                         <h1 class="title-text text-center">Find Your Favorite One Piece Devil Fruit</h1>
-                        <form action="" method="post" novalidate>
+                        <form method="post" role="form" novalidate>
                             <div class="input-group w-60">
+                                {{ form.csrf_token }}
                                 {{ form.search_element(class_="form-control", size=20) }}
-                                <button type="submit" class="btn btn-primary">Search</button>
+                                {{ form.submit(class_="btn btn-primary", type="submit") }}
                             </div>
                         </form>
                     </div>
@@ -40,6 +40,5 @@
 
 <!-- Change fonts -->
 <!-- Change the color pallet of the page -->
-<!-- Start developing the devil_fruit.html -->
 <!-- Add a hover to the keep searching in the navbar -->
 <!-- Improve the search bar -->

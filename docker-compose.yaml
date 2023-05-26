@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    build: ./db
+    container_name: postgresql-container
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+  
+  wait-for-db:
+    image: alpine
+    command: ["sh", "-c", "/script/wait-for-it.sh db:5432 -t 60 && echo 'Database is ready!'"]
+    depends_on:
+      - db
+
+  api:
+    depends_on:
+      - wait-for-db
+    build: ./api
+    container_name: flask-api-container
+    ports:
+      - "5001:5001"
+    networks:
+      - mynetwork
+
+  main_app:
+    depends_on:
+      - api
+    build: ./main_app
+    container_name: flask-main-app-container
+    ports:
+      - "5000:5000"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

@@ -50,5 +50,6 @@ def get_a_devil_fruits(fruit):
                   }
     return jsonify(fruit_info)
 
-# TODO create a docker compose to get all the containers up with their respective dependencies
+# TODO separate the devil_fruits.scrape_devil_fruits() from the get, so it runs when the container is being created
+# TODO make the api restful adding post, delete, patch, put
 # TODO add documentation of the api on the "/"

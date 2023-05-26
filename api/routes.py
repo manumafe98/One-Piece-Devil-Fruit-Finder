@@ -53,3 +53,4 @@ def get_a_devil_fruits(fruit):
 # TODO separate the devil_fruits.scrape_devil_fruits() from the get, so it runs when the container is being created
 # TODO make the api restful adding post, delete, patch, put
 # TODO add documentation of the api on the "/"
+# TODO change the routes to /devil_fruits and /devil_fruits/<devil_fruit>

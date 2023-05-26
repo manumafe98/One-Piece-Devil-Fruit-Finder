@@ -23,3 +23,4 @@ def home():
     return render_template("index.html", form=form)
 
 # TODO add a check of form.search_element.data before making the api call and title case the devil_fruit
+# TODO add docstrings to the functions

@@ -11,7 +11,7 @@ main = Blueprint("main", __name__)
 def home():
     form = SearchForm()
     if form.validate_on_submit():
-        response = requests.get(f"http://127.0.0.1:5001/get/{form.search_element.data}")
+        response = requests.get(f"http://flask-api-container:5001/get/{form.search_element.data}")
         if response.status_code == 200:
             devil_fruit = response.json()
             image_url = devil_fruit["fruit_img"]

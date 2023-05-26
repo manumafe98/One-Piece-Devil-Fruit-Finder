@@ -22,6 +22,8 @@ class DevilFruits:
     """
     def __init__(self):
         self.chrome_options = Options()
+        self.chrome_options.add_argument('--no-sandbox')
+        self.chrome_options.add_argument('--disable-dev-shm-usage')
         self.chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=self.chrome_options)
 
@@ -155,3 +157,5 @@ class DevilFruits:
         final_list = list(dict.fromkeys(final_list))
 
         self.get_fruit_info(final_list)
+
+# TODO add a try to href_list for the error selenium.common.exceptions.StaleElementReferenceException

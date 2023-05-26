@@ -50,5 +50,5 @@ def get_a_devil_fruits(fruit):
                   }
     return jsonify(fruit_info)
 
-# TODO dockerize the application and the database
+# TODO create a docker compose to get all the containers up with their respective dependencies
 # TODO add documentation of the api on the "/"

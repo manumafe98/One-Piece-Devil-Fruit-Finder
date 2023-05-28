@@ -41,4 +41,3 @@ services:
 
 networks:
   app_network:
-    name: app_network

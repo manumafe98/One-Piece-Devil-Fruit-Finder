@@ -67,37 +67,37 @@ class DevilFruits:
             if "Non-Canon" in primary_anchor_tag or "Non-Canon" in secondary_anchor_tag:
                 continue
 
-            fruit_img = self.driver.find_element(By.CSS_SELECTOR, "aside > figure > a").get_attribute("href")
+            devil_fruit_img = self.driver.find_element(By.CSS_SELECTOR, "aside > figure > a").get_attribute("href")
 
             try:
-                fruit_name = self.driver.find_element(
+                devil_fruit_name = self.driver.find_element(
                     By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]"
                               "/div[2]/div/aside/section/div[2]/div").text.split("\n")[0]
             except selenium.common.exceptions.NoSuchElementException:
                 try:
-                    fruit_name = self.driver.find_element(
+                    devil_fruit_name = self.driver.find_element(
                         By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]"
                                   "/div[2]/div/aside/section/div[3]/div").text.split("\n")[0]
                 except selenium.common.exceptions.NoSuchElementException:
-                    fruit_name = self.driver.find_element(
+                    devil_fruit_name = self.driver.find_element(
                         By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]"
                                   "/div[1]/div/aside/section/div[2]/div").text.split("\n")[0]
 
             # Improving formatting of fruit_names
-            if "(" in fruit_name:
-                fruit_name = fruit_name.split("(")[0]
-            elif "[" in fruit_name:
-                fruit_name = fruit_name.split("[")[0]
+            if "(" in devil_fruit_name:
+                devil_fruit_name = devil_fruit_name.split("(")[0]
+            elif "[" in devil_fruit_name:
+                devil_fruit_name = devil_fruit_name.split("[")[0]
 
-            fruit_name = fruit_name.strip()
-            if "Moderu" in fruit_name:
-                fruit_name = re.sub(r'\\', '', fruit_name)
-                fruit_name = re.sub(r'["“”]', '', fruit_name)
-                fruit_name = re.sub(r'[:,]', '', fruit_name)
+            devil_fruit_name = devil_fruit_name.strip()
+            if "Moderu" in devil_fruit_name:
+                devil_fruit_name = re.sub(r'\\', '', devil_fruit_name)
+                devil_fruit_name = re.sub(r'["“”]', '', devil_fruit_name)
+                devil_fruit_name = re.sub(r'[:,]', '', devil_fruit_name)
             else:
                 regex = re.compile('[^a-zA-Z]')
-                fruit_name = regex.sub('', fruit_name)
-                fruit_name = re.sub(r"(\w)([A-Z])", r"\1 \2", fruit_name)
+                devil_fruit_name = regex.sub('', devil_fruit_name)
+                devil_fruit_name = re.sub(r"(\w)([A-Z])", r"\1 \2", devil_fruit_name)
 
             try:
                 current_user = self.driver.find_element(
@@ -117,32 +117,33 @@ class DevilFruits:
                 current_user = current_user.split("\n")[0]
 
             try:
-                fruit_type_elem = self.driver.find_element(
+                devil_fruit_type_elem = self.driver.find_element(
                     By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/aside/section/div[6]/div")
-                for fruit_type in fruit_type_elem.find_elements(By.CSS_SELECTOR, "div > a"):
-                    if "Chapter" in fruit_type.text:
-                        fruit_type_elem = self.driver.find_element(
+                for devil_fruit_type in devil_fruit_type_elem.find_elements(By.CSS_SELECTOR, "div > a"):
+                    if "Chapter" in devil_fruit_type.text:
+                        devil_fruit_type_elem = self.driver.find_element(
                             By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[2]/div/aside/section/div[7]/div")
             except selenium.common.exceptions.NoSuchElementException:
-                fruit_type_elem = self.driver.find_element(
+                devil_fruit_type_elem = self.driver.find_element(
                     By.XPATH, "/html/body/div[4]/div[3]/div[2]/main/div[3]/div[1]/div/aside/section/div[6]/div")
 
-            types = [fruit_type.text for fruit_type in fruit_type_elem.find_elements(By.CSS_SELECTOR, "div > a")]
+            types = [devil_fruit_type.text for devil_fruit_type in devil_fruit_type_elem.find_elements(
+                By.CSS_SELECTOR, "div > a")]
 
             if len(types) > 1:
-                fruit_type = ", ".join(types)
-                new_fruit = FruitsDb(fruit_name=fruit_name,
-                                     fruit_type=fruit_type,
-                                     current_user=current_user,
-                                     fruit_img=fruit_img)
-                db.session.add(new_fruit)
+                devil_fruit_type = ", ".join(types)
+                new_devil_fruit = FruitsDb(devil_fruit_name=devil_fruit_name,
+                                           devil_fruit_type=devil_fruit_type,
+                                           current_user=current_user,
+                                           devil_fruit_img=devil_fruit_img)
+                db.session.add(new_devil_fruit)
                 db.session.commit()
             else:
-                new_fruit = FruitsDb(fruit_name=fruit_name,
-                                     fruit_type=types[0],
-                                     current_user=current_user,
-                                     fruit_img=fruit_img)
-                db.session.add(new_fruit)
+                new_devil_fruit = FruitsDb(devil_fruit_name=devil_fruit_name,
+                                           devil_fruit_type=types[0],
+                                           current_user=current_user,
+                                           devil_fruit_img=devil_fruit_img)
+                db.session.add(new_devil_fruit)
                 db.session.commit()
         self.driver.quit()
 

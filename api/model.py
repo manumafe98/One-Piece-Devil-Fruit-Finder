@@ -13,13 +13,13 @@ class FruitsDb(db.Model):
 
     Attributes:
         id (int): The unique identifier for the fruit.
-        fruit_name (str): The name of the devil fruit.
-        fruit_type (str): The type of the devil fruit.
+        devil_fruit_name (str): The name of the devil fruit.
+        devil_fruit_type (str): The type of the devil fruit.
         current_user (str): The current user associated with the devil fruit.
 
     """
     id = db.Column(db.Integer, primary_key=True)
-    fruit_name = db.Column(db.String(250), unique=True, nullable=False)
-    fruit_type = db.Column(db.String(250), nullable=False)
+    devil_fruit_name = db.Column(db.String(250), unique=True, nullable=False)
+    devil_fruit_type = db.Column(db.String(250), nullable=False)
     current_user = db.Column(db.String(250), nullable=False)
-    fruit_img = db.Column(db.String(250), nullable=False)
+    devil_fruit_img = db.Column(db.String(250), nullable=False)

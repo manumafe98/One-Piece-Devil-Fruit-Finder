@@ -17,7 +17,8 @@ def create_app():
     app = Flask(__name__)
 
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://admin:admin@postgresql-container:5432/flask_db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://admin:admin@db:5432/flask_db"
+
     db.init_app(app)
 
     app.register_blueprint(main)

@@ -28,5 +28,5 @@ RUN pip3 install -r requirements.txt
 # Expose the app port
 EXPOSE 5001
 
-# Run the setup script and start the Flask app
-CMD python api_setup.py && flask run --host=0.0.0.0 --port=5001
+# Run the setup script and start the Flask app with a sleep command
+CMD sleep 20 && python api_setup.py && flask run --host=0.0.0.0 --port=5001

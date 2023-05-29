@@ -1,27 +1,22 @@
 version: '3.8'
 
 services:
-  db:
+
+  pgsql:
     image: postgres:latest
     container_name: postgresql-container
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=flask_db
     ports:
       - "5432:5432"
     networks:
       - app_network
 
-  wait-for-db:
-    image: alpine
-    command: ["sh", "-c", "/script/wait-for-it.sh db:5432 -t 60 && echo 'Database is ready!'"]
-    depends_on:
-      - db
-
   api:
     depends_on:
-      - wait-for-db
+      - pgsql
     build: ./api
     container_name: flask-api-container
     ports:
@@ -41,3 +36,4 @@ services:
 
 networks:
   app_network:
+    name: app_network

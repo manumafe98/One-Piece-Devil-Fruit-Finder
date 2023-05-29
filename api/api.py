@@ -1,7 +1,7 @@
 from flask import Flask
 from model import db
 from routes import main
-import os
+from swagger import swagger_ui_blueprint
 
 
 def create_app():
@@ -17,9 +17,11 @@ def create_app():
     app = Flask(__name__)
 
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://docker:docker@pgsql:5432/flask_db"
+    # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db" Leave for testing
 
     db.init_app(app)
 
     app.register_blueprint(main)
+    app.register_blueprint(swagger_ui_blueprint)
 
     return app

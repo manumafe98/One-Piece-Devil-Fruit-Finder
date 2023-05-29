@@ -1,0 +1,264 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Devil Fruits API",
+    "description": "API to retrieve and manage devil fruits",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/devil_fruits": {
+      "get": {
+        "summary": "Retrieve all devil fruits",
+        "description": "Retrieves all devil fruits information stored in the database.",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "devil_fruit_name": {
+                    "type": "string"
+                  },
+                  "devil_fruit_type": {
+                    "type": "string"
+                  },
+                  "current_user": {
+                    "type": "string"
+                  },
+                  "devil_fruit_img": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new devil fruit",
+        "description": "Adds a new devil fruit to the database.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Devil fruit object to be added",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "devil_fruit_name": {
+                  "type": "string"
+                },
+                "devil_fruit_type": {
+                  "type": "string"
+                },
+                "current_user": {
+                  "type": "string"
+                },
+                "devil_fruit_img": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - Fruit already exists"
+          }
+        }
+      }
+    },
+    "/devil_fruits/{devil_fruit}": {
+      "get": {
+        "summary": "Retrieve a specific devil fruit",
+        "description": "Retrieves information about a specific devil fruit.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "devil_fruit",
+            "description": "Name of the devil fruit to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "devil_fruit_name": {
+                  "type": "string"
+                },
+                "devil_fruit_type": {
+                  "type": "string"
+                },
+                "current_user": {
+                  "type": "string"
+                },
+                "devil_fruit_img": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Devil fruit not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific devil fruit",
+        "description": "Deletes a specific devil fruit from the database.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "devil_fruit",
+            "description": "Name of the devil fruit to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Devil fruit not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific devil fruit",
+        "description": "Updates all attributes of a specific devil fruit.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "devil_fruit",
+            "description": "Name of the devil fruit to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Devil fruit object with updated values",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "devil_fruit_name": {
+                  "type": "string"
+                },
+                "devil_fruit_type": {
+                  "type": "string"
+                },
+                "current_user": {
+                  "type": "string"
+                },
+                "devil_fruit_img": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Devil fruit not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partially update a specific devil fruit",
+        "description": "Updates specific attributes of a specific devil fruit.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "devil_fruit",
+            "description": "Name of the devil fruit to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Devil fruit object with updated values",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "devil_fruit_name": {
+                  "type": "string"
+                },
+                "devil_fruit_type": {
+                  "type": "string"
+                },
+                "current_user": {
+                  "type": "string"
+                },
+                "devil_fruit_img": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Devil fruit not found"
+          }
+        }
+      }
+    }
+  }
+}

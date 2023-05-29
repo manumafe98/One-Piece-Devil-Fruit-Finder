@@ -1,8 +1,13 @@
 from model import db, FruitsDb
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_from_directory, redirect
 
 
 main = Blueprint("main", __name__)
+
+
+@main.route("/")
+def main_route():
+    return redirect("/apidocs")
 
 
 @main.route("/devil_fruits", methods=["GET", "POST"])
@@ -109,4 +114,6 @@ def get_a_devil_fruits(devil_fruit):
         return jsonify({"message": "Devil fruit updated successfully"}), 200
 
 
-# TODO add documentation of the api on the "/"
+@main.route("/api/static/swagger.json")
+def serve_swagger_json():
+    return send_from_directory("static", "swagger.json")

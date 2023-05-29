@@ -16,6 +16,7 @@ class FruitsDb(db.Model):
         devil_fruit_name (str): The name of the devil fruit.
         devil_fruit_type (str): The type of the devil fruit.
         current_user (str): The current user associated with the devil fruit.
+        devil_fruit_img (str): The link of an image of the devil_fruit.
 
     """
     id = db.Column(db.Integer, primary_key=True)

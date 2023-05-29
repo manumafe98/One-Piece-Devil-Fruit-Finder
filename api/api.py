@@ -7,7 +7,7 @@ import os
 def create_app():
     """Create and initialize the Flask application.
 
-    This function sets up the Flask application by configuring the secret key, connecting to the SQLite database,
+    This function sets up the Flask application, connecting to the SQLite database,
     initializing the database instance, and registering the main blueprint.
 
     Returns:
@@ -16,7 +16,6 @@ def create_app():
     """
     app = Flask(__name__)
 
-    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://docker:docker@pgsql:5432/flask_db"
 
     db.init_app(app)

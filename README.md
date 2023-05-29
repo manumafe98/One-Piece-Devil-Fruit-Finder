@@ -7,7 +7,11 @@ This project consists of an API and a frontend application that provide informat
 The API, built using Flask and Docker, offers the following endpoints:
 
 - `GET /devil_fruits`: Retrieves a list of all devil fruits available.
+- `POST /deevil_fruits`: Creates a new devil fruit and add it to the database.
 - `GET /devil_fruits/<devil_fruit>`: Retrieves the details of a specific devil fruit selected by the user.
+- `DELETE /devil_fruits/<devil_fruit>`: Deletes a specific devil fruit.
+- `PUT /devil_fruits/<devil_fruit>`: Updates all the information of a devil fruit.
+- `PATCH /devil_fruits/<devil_fruit>`: Updates one attribute of the specified devil fruit.
 
 The API utilizes a PostgreSQL database to store the scraped data, enabling efficient retrieval of information. It also leverages the jsonify module to format the data and present it in a browser-friendly manner.
 

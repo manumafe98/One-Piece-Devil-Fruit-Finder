@@ -158,5 +158,3 @@ class DevilFruits:
         final_list = list(dict.fromkeys(final_list))
 
         self.get_fruit_info(final_list)
-
-# TODO add a try to href_list for the error selenium.common.exceptions.StaleElementReferenceException

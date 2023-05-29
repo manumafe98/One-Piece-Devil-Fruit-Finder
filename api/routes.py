@@ -7,10 +7,17 @@ main = Blueprint("main", __name__)
 
 @main.route("/devil_fruits", methods=["GET", "POST"])
 def get_all_devil_fruits():
-    """This function checks if the db has information and if not initiates the scraping process.
+    """
+    Retrieves all devil fruits information or adds a new devil fruit to the database.
 
     Returns:
-        json: Retrieves a json of all the devil fruits information
+        - If the request method is "GET", returns a JSON object with information about all devil fruits
+          stored in the database.
+        - If the request method is "POST", adds a new devil fruit to the database based on the provided
+          JSON data and returns a JSON response with a success message.
+
+        If a devil fruit with the same name already exists in the database, a JSON response with an error
+        message is returned.
     """
     if request.method == "GET":
         all_devil_fruits = db.session.query(FruitsDb).all()
@@ -41,13 +48,22 @@ def get_all_devil_fruits():
 
 @main.route("/devil_fruits/<string:devil_fruit>", methods=["GET", "DELETE", "PUT", "PATCH"])
 def get_a_devil_fruits(devil_fruit):
-    """Makes a query to the db with the fruit_name that you passed and retrieves a json with the data.
+    """
+    Retrieves, updates, or deletes information about a specific devil fruit.
 
     Args:
-        devil_fruit (str): the devil fruit you want data
+        devil_fruit (str): The name of the devil fruit to query.
 
     Returns:
-        json: Retrieves a json with the information of the passed fruit
+        - If the request method is "GET", returns a JSON object with information about the specified devil fruit.
+        - If the request method is "DELETE", deletes the specified devil fruit from the database and returns a
+          JSON response with a success message.
+        - If the request method is "PUT", updates all attributes of the specified devil fruit based on the
+          provided JSON data and returns a JSON response with a success message.
+        - If the request method is "PATCH", updates specific attributes of the specified devil fruit based on
+          the provided JSON data and returns a JSON response with a success message.
+
+        If the specified devil fruit is not found in the database, a JSON response with an error message is returned.
     """
     chosen_devil_fruit = FruitsDb.query.filter_by(devil_fruit_name=devil_fruit).first()
     if not chosen_devil_fruit:

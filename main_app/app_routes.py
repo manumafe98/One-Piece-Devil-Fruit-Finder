@@ -9,6 +9,17 @@ main = Blueprint("main", __name__)
 
 @main.route("/", methods=["GET", "POST"])
 def home():
+    """
+    Handles the home page route.
+
+    If a valid search form is submitted, it retrieves information about the searched devil fruit from an API,
+    fetches the associated image, and renders a template with the devil fruit details.
+
+    Returns:
+        If a valid search form is submitted and the necessary data is retrieved successfully, the rendered
+        template with devil fruit details is returned. Otherwise, the rendered index template with the search
+        form is returned.
+    """
     form = SearchForm()
     if form.validate_on_submit():
         devil_fruit_searched = form.search_element.data.title()
@@ -23,5 +34,4 @@ def home():
                 return render_template("devil_fruit.html", devil_fruit=devil_fruit, devil_fruit_img=base64_image)
     return render_template("index.html", form=form)
 
-# TODO add a check of form.search_element.data before making the api call and title case the devil_fruit
-# TODO add docstrings to the functions
+# TODO test if title case is working

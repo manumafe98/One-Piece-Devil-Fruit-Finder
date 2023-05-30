@@ -158,3 +158,5 @@ class DevilFruits:
         final_list = list(dict.fromkeys(final_list))
 
         self.get_fruit_info(final_list)
+
+# TODO title case the fruit_name before writing it to the database

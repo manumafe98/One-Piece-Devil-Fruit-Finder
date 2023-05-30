@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, url_for
-from form import SearchForm
+from flask import Blueprint, render_template, redirect, url_for
+from form import SearchForm, AddForm, UpdateForm
 import requests
 import base64
 
@@ -34,4 +34,39 @@ def home():
                 return render_template("devil_fruit.html", devil_fruit=devil_fruit, devil_fruit_img=base64_image)
     return render_template("index.html", form=form)
 
-# TODO test if title case is working
+
+@main.route("/add", methods=["GET", "POST"])
+def add():
+    form = AddForm()
+    if form.validate_on_submit():
+        devil_fruit_params = {
+            "devil_fruit_name": form.devil_fruit_name.data.title(),
+            "devil_fruit_type": form.devil_fruit_type.data.title(),
+            "current_user": form.current_user.data.title(),
+            "devil_fruit_img": form.devil_fruit_image.data.title()
+        }
+        response = requests.post("http://api:5001/devil_fruits", json=devil_fruit_params)
+        if response.status_code == 200:
+            return redirect(url_for("main.home"))
+    return render_template("add.html", form=form)
+
+
+@main.route("/update", methods=["GET", "POST"])
+def update():
+    form = UpdateForm()
+    if form.validate_on_submit():
+        devil_fruit_name = form.devil_fruit_to_update.data.title()
+        updated_value = form.updated_value.data
+        if form.field_to_update.data != "devil_fruit_img":
+            updated_value.title()
+        devil_fruit_params = {
+            f"{form.field_to_update.data}": updated_value
+        }
+        response = requests.patch(f"http://api:5001/devil_fruits/{devil_fruit_name}", json=devil_fruit_params)
+        if response.status_code == 200:
+            return redirect(url_for("main.home"))
+    return render_template("update.html", form=form)
+
+# TODO add docstrings to the new functions
+# TODO update readme
+# TODO continue testing the PATCH to the api

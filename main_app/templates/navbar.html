@@ -1,13 +1,19 @@
 <!-- Navbar -->
 <nav class="navbar custom-navbar">
     <div class="container-fluid">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand">
         <img src="static/images/gomu_gomu.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
         <span class="navbar-brand-text">Devil Fruit Finder</span>
     </a>
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav flex-row">
         <li class="nav-item custom-nav-item">
-        <a class="nav-link" href="{{ url_for('main.home') }}">Keep Searching</a>
+        <a class="nav-link" href="{{ url_for('main.home') }}">Search</a>
+        </li>
+        <li class="nav-item custom-nav-item">
+        <a class="nav-link" href="{{ url_for('main.add') }}">Add</a>
+        </li>
+        <li class="nav-item custom-nav-item">
+        <a class="nav-link" href="{{ url_for('main.update') }}">Update</a>
         </li>
     </ul>
     </div>

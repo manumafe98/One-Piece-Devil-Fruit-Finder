@@ -11,7 +11,6 @@ def create_app():
         app (Flask): The configured Flask application.
     """
     app = Flask(__name__)
-
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     app.register_blueprint(main)
 

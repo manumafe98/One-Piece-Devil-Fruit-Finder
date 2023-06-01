@@ -17,9 +17,14 @@ The API utilizes a PostgreSQL database to store the scraped data, enabling effic
 
 ## Frontend Application
 
-The frontend application is designed to consume the API's `GET /devil_fruits/<devil_fruit>` endpoint. It features a user-friendly browser that allows users to search for devil fruits. When a fruit is searched, the application displays a card containing the fruit's image and its characteristics.
+The frontend application is designed to consume the APIs `GET /devil_fruits/<devil_fruit>` endpoint. It features a user-friendly browser that allows users to search for devil fruits. When a fruit is searched, the application displays a card containing the fruit's image and its characteristics.
 
 Both the API and the frontend application are containerized using Docker, making it easy to deploy and manage the project in various environments.
+
+It uses the `POST /devil_fruits` endpoint with the `ADD` button on the navbar, so you can add your favorite fruits. 
+
+And with the `Update` button it consumes the `PATCH /devil_fruits/<devil_fruit>` endpoint, so you can modify the attributes of the fruit you want. 
+
 
 ## Installation and Usage
 

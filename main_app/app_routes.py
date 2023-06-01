@@ -37,13 +37,25 @@ def home():
 
 @main.route("/add", methods=["GET", "POST"])
 def add():
+    """
+    Handle the add route.
+
+    This function handles the HTTP GET and POST requests for the '/add' route. It renders
+    the 'add.html' template, which contains a form for adding a Devil Fruit. If the form is
+    submitted and valid, it sends a POST request to the Devil Fruit API to add the new Devil Fruit.
+    If the request is successful, the user is redirected to the home page.
+
+    Returns:
+        A rendered template or a redirect response.
+
+    """
     form = AddForm()
     if form.validate_on_submit():
         devil_fruit_params = {
             "devil_fruit_name": form.devil_fruit_name.data.title(),
             "devil_fruit_type": form.devil_fruit_type.data.title(),
             "current_user": form.current_user.data.title(),
-            "devil_fruit_img": form.devil_fruit_image.data.title()
+            "devil_fruit_img": form.devil_fruit_image.data
         }
         response = requests.post("http://api:5001/devil_fruits", json=devil_fruit_params)
         if response.status_code == 200:
@@ -53,6 +65,18 @@ def add():
 
 @main.route("/update", methods=["GET", "POST"])
 def update():
+    """
+    Handle the update route.
+
+    This function handles the HTTP GET and POST requests for the '/update' route. It renders
+    the 'update.html' template, which contains a form for updating a Devil Fruit. If the form is
+    submitted and valid, it sends a PATCH request to the Devil Fruit API to update the specified
+    Devil Fruit. If the request is successful, the user is redirected to the home page.
+
+    Returns:
+        A rendered template or a redirect response.
+
+    """
     form = UpdateForm()
     if form.validate_on_submit():
         devil_fruit_name = form.devil_fruit_to_update.data.title()
@@ -67,6 +91,4 @@ def update():
             return redirect(url_for("main.home"))
     return render_template("update.html", form=form)
 
-# TODO add docstrings to the new functions
 # TODO update readme
-# TODO continue testing the PATCH to the api

@@ -7,6 +7,16 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def main_route():
+    """
+    Redirect to API documentation.
+
+    This function handles the HTTP GET request for the root route ("/"). It redirects the user to
+    the "/apidocs" route, which serves the API documentation.
+
+    Returns:
+        A redirect response to the API documentation.
+
+    """
     return redirect("/apidocs")
 
 
@@ -106,7 +116,7 @@ def get_a_devil_fruits(devil_fruit):
             chosen_devil_fruit.devil_fruit_name = devil_fruit_data["devil_fruit_name"]
         if "devil_fruit_type" in devil_fruit_data:
             chosen_devil_fruit.devil_fruit_type = devil_fruit_data["devil_fruit_type"]
-        if "devil_current_user" in devil_fruit_data:
+        if "current_user" in devil_fruit_data:
             chosen_devil_fruit.current_user = devil_fruit_data["current_user"]
         if "devil_fruit_img" in devil_fruit_data:
             chosen_devil_fruit.devil_fruit_img = devil_fruit_data["devil_fruit_img"]
@@ -116,4 +126,14 @@ def get_a_devil_fruits(devil_fruit):
 
 @main.route("/api/static/swagger.json")
 def serve_swagger_json():
+    """
+    Serve the Swagger JSON file.
+
+    This function handles the HTTP GET request for the "/api/static/swagger.json" route. It serves
+    the "swagger.json" file from the "static" directory.
+
+    Returns:
+        The Swagger JSON file.
+
+    """
     return send_from_directory("static", "swagger.json")

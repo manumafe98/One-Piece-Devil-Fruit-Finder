@@ -132,14 +132,14 @@ class DevilFruits:
 
             if len(types) > 1:
                 devil_fruit_type = ", ".join(types)
-                new_devil_fruit = FruitsDb(devil_fruit_name=devil_fruit_name,
+                new_devil_fruit = FruitsDb(devil_fruit_name=devil_fruit_name.title(),
                                            devil_fruit_type=devil_fruit_type,
                                            current_user=current_user,
                                            devil_fruit_img=devil_fruit_img)
                 db.session.add(new_devil_fruit)
                 db.session.commit()
             else:
-                new_devil_fruit = FruitsDb(devil_fruit_name=devil_fruit_name,
+                new_devil_fruit = FruitsDb(devil_fruit_name=devil_fruit_name.title(),
                                            devil_fruit_type=types[0],
                                            current_user=current_user,
                                            devil_fruit_img=devil_fruit_img)
@@ -158,5 +158,3 @@ class DevilFruits:
         final_list = list(dict.fromkeys(final_list))
 
         self.get_fruit_info(final_list)
-
-# TODO title case the fruit_name before writing it to the database

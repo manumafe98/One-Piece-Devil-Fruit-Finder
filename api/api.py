@@ -17,7 +17,7 @@ def create_app():
     app = Flask(__name__)
 
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://docker:docker@pgsql:5432/flask_db"
-    # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db" # Leave for testing
+    # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # Leave for testing
 
     db.init_app(app)
 
